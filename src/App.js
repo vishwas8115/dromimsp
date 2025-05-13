@@ -1,3 +1,5 @@
+// App.js
+
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
@@ -6,7 +8,7 @@ import ProductForm from './components/ProductForm';
 import ProductTable from './components/ProductTable';
 import CustomerManagement from './components/CustomerManagement';
 import StockManagement from './components/StockManagement';
-import ReportsPage from './components/ReportsPage'; // <-- Import ReportsPage
+import ReportsPage from './components/ReportsPage'; // Import ReportsPage
 import './App.css';
 
 function App() {
@@ -44,11 +46,11 @@ function App() {
       const res = await fetch('http://localhost:5000/api/products', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(product)
+        body: JSON.stringify(product),
       });
       const data = await res.json();
       if (res.ok) {
-        setProducts(prev => [...prev, data]);
+        setProducts((prev) => [...prev, data]);
       } else {
         alert(data.message || 'Failed to add product.');
       }
@@ -61,7 +63,7 @@ function App() {
   const handleDelete = async (id) => {
     try {
       await fetch(`http://localhost:5000/api/products/${id}`, { method: 'DELETE' });
-      setProducts(prev => prev.filter(p => p._id !== id));
+      setProducts((prev) => prev.filter((p) => p._id !== id));
     } catch (error) {
       console.error('Error deleting product:', error);
     }
@@ -76,12 +78,12 @@ function App() {
       const res = await fetch(`http://localhost:5000/api/products/${updatedProduct._id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedProduct)
+        body: JSON.stringify(updatedProduct),
       });
       const data = await res.json();
       if (res.ok) {
-        setProducts(prev =>
-          prev.map(p => (p._id === data._id ? data : p))
+        setProducts((prev) =>
+          prev.map((p) => (p._id === data._id ? data : p))
         );
         setEditingProduct(null);
         alert('Product updated successfully!');
@@ -137,7 +139,7 @@ function App() {
               />
             }
           />
-          <Route path="/reports" element={<ReportsPage />} /> {/* <-- Reports route */}
+          <Route path="/reports" element={<ReportsPage />} /> {/* Reports route */}
         </Routes>
       </div>
     </Router>

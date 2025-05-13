@@ -1,84 +1,77 @@
-// ReportsPage.jsx
+// components/ReportsPage.js
+
 import React, { useState, useEffect } from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import './ReportsPage.css';
 
 const ReportsPage = () => {
-  const [inventoryValue, setInventoryValue] = useState(0);
-  const [categoryData, setCategoryData] = useState({});
-  const [lowStockProducts, setLowStockProducts] = useState([]);
-  const [customerReport, setCustomerReport] = useState([]);
+  const [reports, setReports] = useState({
+    inventoryValue: 0,
+    lowStockProducts: [],
+    customerReports: [],
+  });
 
   useEffect(() => {
     const fetchReports = async () => {
-      const inventoryRes = await fetch('/api/reports/inventory-value');
-      const inventoryData = await inventoryRes.json();
-      setInventoryValue(inventoryData.totalValue);
+      try {
+        const inventoryRes = await fetch('http://localhost:5000/api/reports/inventory-value');
+        const inventoryData = await inventoryRes.json();
 
-      const categoryRes = await fetch('/api/reports/category-pie');
-      const categoryData = await categoryRes.json();
-      setCategoryData(categoryData);
+        const lowStockRes = await fetch('http://localhost:5000/api/reports/low-stock');
+        const lowStockData = await lowStockRes.json();
 
-      const lowStockRes = await fetch('/api/reports/low-stock');
-      const lowStockData = await lowStockRes.json();
-      setLowStockProducts(lowStockData);
+        const customerRes = await fetch('http://localhost:5000/api/reports/customer-sales');
+        const customerData = await customerRes.json();
 
-      const customerReportRes = await fetch('/api/reports/customer-report');
-      const customerReportData = await customerReportRes.json();
-      setCustomerReport(customerReportData);
+        setReports({
+          inventoryValue: inventoryData.totalValue,
+          lowStockProducts: lowStockData,
+          customerReports: customerData,
+        });
+      } catch (error) {
+        console.error('Error fetching reports:', error);
+      }
     };
 
     fetchReports();
   }, []);
 
   return (
-    <div>
-      <h2>Reports</h2>
-      <div>
-        <h3>Total Inventory Value: ${inventoryValue}</h3>
-      </div>
-
-      <div>
-        <h3>Category-wise Stock</h3>
-        <ResponsiveContainer width="100%" height={300}>
-          <PieChart>
-            <Pie
-              data={Object.entries(categoryData).map(([name, value]) => ({
-                name,
-                value,
-              }))}
-              dataKey="value"
-              nameKey="name"
-              outerRadius={100}
-            >
-              {Object.keys(categoryData).map((_, index) => (
-                <Cell key={index} fill={['#8884d8', '#82ca9d', '#ffc658'][index % 3]} />
-              ))}
-            </Pie>
-          </PieChart>
-        </ResponsiveContainer>
-      </div>
-
-      <div>
+    <div className="reports-page">
+      <h2 className="reports-page__title">Reports</h2>
+      <section className="reports-page__section">
+        <h3>Total Inventory Value</h3>
+        <p className="reports-page__value">{reports.inventoryValue}</p>
+      </section>
+      <section className="reports-page__section">
         <h3>Low Stock Products</h3>
-        <ul>
-          {lowStockProducts.map((product) => (
-            <li key={product._id}>
-              {product.name} - {product.stock} in stock
-            </li>
+        <div className="reports-page__grid">
+          {reports.lowStockProducts.map((product) => (
+            <div key={product._id} className="reports-page__card">
+              <h4>{product.name}</h4>
+              <p>{product.stock} units left</p>
+            </div>
           ))}
-        </ul>
-      </div>
-
-      <div>
-        <h3>Customer Report</h3>
-        <ul>
-          {customerReport.map((report) => (
-            <li key={report.customer}>
-              {report.customer}: {report.purchases} Purchases, {report.sales} Sales
-            </li>
-          ))}
-        </ul>
-      </div>
+        </div>
+      </section>
+      <section className="reports-page__section">
+        <h3>Customer Sales Report</h3>
+        <table className="reports-page__table">
+          <thead>
+            <tr>
+              <th>Customer</th>
+              <th>Total Sales</th>
+            </tr>
+          </thead>
+          <tbody>
+            {reports.customerReports.map((report) => (
+              <tr key={report._id}>
+                <td>{report.customer.name}</td>
+                <td>{report.totalSales}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
     </div>
   );
 };

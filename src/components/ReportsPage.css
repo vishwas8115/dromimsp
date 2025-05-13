@@ -1,48 +1,83 @@
-.reports-container {
-  margin-left: 240px;
-  padding: 30px;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f5f7fa;
-  min-height: 100vh;
+/* components/ReportsPage.css */
+
+.reports-page {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: 'Arial', sans-serif;
 }
 
-.report-section {
-  background: white;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  margin-bottom: 30px;
-}
-
-.report-section h3 {
-  margin-bottom: 15px;
+.reports-page__title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
   color: #333;
 }
 
-.report-value {
-  font-size: 2rem;
-  color: #009688;
+.reports-page__section {
+  margin-bottom: 40px;
+}
+
+.reports-page__section h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.reports-page__value {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #007bff;
+}
+
+.reports-page__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.reports-page__card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.reports-page__card h4 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.reports-page__card p {
+  font-size: 1rem;
+  color: #666;
+}
+
+.reports-page__table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.reports-page__table th,
+.reports-page__table td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.reports-page__table th {
+  background-color: #f4f4f4;
   font-weight: bold;
 }
 
-.report-table {
-  width: 100%;
-  border-collapse: collapse;
+.reports-page__table tr:nth-child(even) {
+  background-color: #f9f9f9;
 }
 
-.report-table th,
-.report-table td {
-  border: 1px solid #ccc;
-  padding: 10px;
-  text-align: left;
-}
-
-.report-table th {
-  background-color: #f0f0f0;
-}
-
-.chart-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
+.reports-page__table tr:hover {
+  background-color: #f1f1f1;
 }
