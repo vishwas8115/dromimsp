@@ -1,0 +1,6 @@
+.header {
+  background-color: #ecf0f1;
+  padding: 15px 30px;
+  margin-left: 210px; /* because sidebar is fixed */
+  border-bottom: 1px solid #ccc;
+}

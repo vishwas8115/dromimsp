@@ -1,0 +1,43 @@
+.product-form-container {
+  margin-left: 200px;
+  padding: 30px;
+}
+
+.product-form {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 500px;
+  border: 1px solid #ccc;
+}
+
+.product-form h2 {
+  margin-bottom: 20px;
+}
+
+.product-form label {
+  display: block;
+  margin: 10px 0 5px;
+}
+
+.product-form input,
+.product-form select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 12px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+}
+
+.product-form button {
+  background-color: #2980b9;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.product-form button:hover {
+  background-color: #21618c;
+}
